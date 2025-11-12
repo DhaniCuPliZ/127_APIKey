@@ -58,3 +58,16 @@ async function startServer() {
         res.status(500).json({ message: "Terjadi kesalahan di server" });
       }
     });
+
+     // Jalankan server setelah koneksi berhasil
+    app.listen(PORT, () => {
+      console.log(`Server berjalan di http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("Gagal terhubung ke database MySQL:", err.message);
+    process.exit(1); // hentikan aplikasi
+  }
+}
+
+// Panggil fungsi utama
+startServer();
