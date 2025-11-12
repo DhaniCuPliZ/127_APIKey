@@ -29,3 +29,15 @@ async function startServer() {
     });
 
     console.log("✅ Terhubung ke database MySQL!");
+
+    // ✅ Endpoint generate token
+    app.get("/generate", async (req, res) => {
+      try {
+        const token = crypto.randomBytes(16).toString("hex");
+        await db.execute("INSERT INTO tokens (token) VALUES (?)", [token]);
+        res.json({ token, message: "Token berhasil dibuat di server" });
+      } catch (error) {
+        console.error("Error generate token:", error);
+        res.status(500).json({ message: "Gagal membuat token" });
+      }
+    });
