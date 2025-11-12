@@ -41,3 +41,20 @@ async function startServer() {
         res.status(500).json({ message: "Gagal membuat token" });
       }
     });
+
+    // ✅ Endpoint verifikasi token
+    app.post("/verify", async (req, res) => {
+      try {
+        const { token } = req.body;
+        const [rows] = await db.execute("SELECT * FROM tokens WHERE token = ?", [token]);
+
+        if (rows.length > 0) {
+          res.json({ valid: true, message: "Token valid" });
+        } else {
+          res.json({ valid: false, message: "Token tidak valid" });
+        }
+      } catch (error) {
+        console.error("Error verify token:", error);
+        res.status(500).json({ message: "Terjadi kesalahan di server" });
+      }
+    });
