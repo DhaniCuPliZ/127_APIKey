@@ -17,3 +17,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Jalankan semua di dalam fungsi async
+async function startServer() {
+  try {
+    // 🔗 Koneksi ke MySQL
+    const db = await mysql.createConnection({
+      host: "localhost",     // Ganti sesuai server kamu
+      user: "root",          // Username MySQL
+      password: "123",       // Password MySQL
+      database: "token_app", // Nama database kamu
+    });
+
+    console.log("✅ Terhubung ke database MySQL!");
